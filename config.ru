@@ -25,5 +25,3 @@ builder = Rack::Builder.new do
     run socialify
   end
 end
-
-Rack::Handler::Mongrel.run builder, :Port => 9292
