@@ -3,7 +3,7 @@ require 'uri'
 
 run lambda { |env|
   if env['REQUEST_URI'].length <= 4
-    return [301, {'Location' => 'http://greatify.heroku.com/www.yelp.com/biz/space-needle-seattle',
+    return [301, {'Location' => 'http://greatify.heroku.com/www.yelp.com/biz/art-of-the-table-seattle',
                   'Content-Type' => 'text/html'}, {}] 
   end
   
