@@ -1,9 +1,10 @@
 require 'net/http'
 require 'uri'
 
-socialify = Proc.new do |env|
+run lambda { |env|
   if env['REQUEST_URI'].length <= 4
-    return [301, {"Content-Type" => "text/html"}, '/www.yelp.com/biz/rom-mai-thai-seattle'] 
+    return [301, {'Location' => 'http://socialify.heroku.com/www.yelp.com/biz/rom-mai-thai-seattle', 
+                  'Content-Type' => 'text/html'}, {}] 
   end
   
   uri = URI.parse("http:/#{env['REQUEST_URI']}")
@@ -16,12 +17,4 @@ socialify = Proc.new do |env|
   response.body.gsub!(Regexp.new(wordlist.join('|') + "\W"), 'great')
 
   [200, {"Content-Type" => "text/html"}, response.body ]
-end
-
-builder = Rack::Builder.new do
-  use Rack::CommonLogger
-  
-  map '/' do
-    run socialify
-  end
-end
+}
