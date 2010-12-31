@@ -3,7 +3,7 @@ require 'uri'
 
 run lambda { |env|
   if env['REQUEST_URI'].length <= 4
-    return [301, {'Location' => '/seattle.citysearch.com/profile/40842072/seattle_wa/matador.html'
+    return [301, {'Location' => '/seattle.citysearch.com/profile/40842072/seattle_wa/matador.html',
                   'Content-Type' => 'text/html'}, {}] 
   end
   
