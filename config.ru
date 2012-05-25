@@ -2,12 +2,14 @@ require 'net/http'
 require 'uri'
 
 run lambda { |env|
-  if env['REQUEST_URI'].length <= 4
+  url = env['REQUEST_URI']
+  if url.length <= 4
     return [301, {'Location' => '/seattle.citysearch.com/profile/40842072/seattle_wa/matador.html',
                   'Content-Type' => 'text/html'}, {}] 
   end
   
-  uri = URI.parse("http:/#{env['REQUEST_URI']}")
+  puts url
+  uri = URI.parse("http:/#{url}")
   response = Net::HTTP.get_response(uri)
 
   wordlist = %w(amazing appalling awful excellent fantastic fine good 
