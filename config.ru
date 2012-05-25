@@ -16,5 +16,9 @@ run lambda { |env|
   response.body.gsub!(Regexp.new(wordlist.collect { |word| " more #{word} " }.join('|')), ' greater ')
   response.body.gsub!(Regexp.new(wordlist.join('|') + "\W"), 'great')
 
+  # obvious relative paths
+  response.body.gsub!(" src=\"/", " src=\"#{url.scheme}://#{uri.host}/")
+  response.body.gsub!(" href=\"/", " href=\"#{url.scheme}://#{uri.host}/")
+
   [200, {"Content-Type" => "text/html"}, response.body ]
 }
