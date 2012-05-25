@@ -10,6 +10,8 @@ run lambda { |env|
   
   puts url
   uri = URI.parse("http:/#{url}")
+  return [404, {}, {}] unless uri.host
+
   response = Net::HTTP.get_response(uri)
 
   wordlist = %w(amazing appalling awful excellent fantastic fine good 
@@ -19,8 +21,8 @@ run lambda { |env|
   response.body.gsub!(Regexp.new(wordlist.join('|') + "\W"), 'great')
 
   # obvious relative paths
-  response.body.gsub!(" src=\"/", " src=\"#{url.scheme}://#{uri.host}/")
-  response.body.gsub!(" href=\"/", " href=\"#{url.scheme}://#{uri.host}/")
+  response.body.gsub!(" src=\"/", " src=\"#{uri.scheme}://#{uri.host}/")
+  response.body.gsub!(" href=\"/", " href=\"#{uri.scheme}://#{uri.host}/")
 
   [200, {"Content-Type" => "text/html"}, response.body ]
 }
